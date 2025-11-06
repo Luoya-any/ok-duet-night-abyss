@@ -115,6 +115,7 @@ config = {
     'onetime_tasks': [  # tasks to execute
         ["src.tasks.AutoSkill", "AutoSkill"],
         ["src.tasks.AutoExpulsion", "AutoExpulsion"],
+        ["src.tasks.Auto65ArtifactTask", "Auto65ArtifactTask"],
         ["src.tasks.AutoDefence", "AutoDefence"],
         ["src.tasks.AutoExploration", "AutoExploration"],
         ["src.tasks.AutoExcavation", "AutoExcavation"],
