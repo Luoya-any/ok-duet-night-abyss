@@ -13,7 +13,7 @@ class AutoExpulsion(DNAOneTimeTask, CommissionsTask):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.icon = FluentIcon.FLAG
-        self.description = "全自动"
+        self.description = "全自动(存在特定开始位置无法全自动)"
         self.default_config.update({
             '开局向前走': 0,
             '任务超时时间': 120,
@@ -24,18 +24,19 @@ class AutoExpulsion(DNAOneTimeTask, CommissionsTask):
             '任务超时时间': '放弃任务前等待的秒数',
         })
         self.setup_commission_config()
-        self.default_config.pop('启用自动穿引共鸣', None)
+        self.default_config.pop("启用自动穿引共鸣", None)
         self.name = "自动驱离"
         self.action_timeout = 10
-        
+
     def run(self):
         DNAOneTimeTask.run(self)
+        self.move_mouse_to_safe_position()
         try:
             return self.do_run()
         except TaskDisabledException as e:
             pass
         except Exception as e:
-            logger.error('AutoExpulsion error', e)
+            logger.error("AutoExpulsion error", e)
             raise
 
     def do_run(self):
@@ -49,22 +50,23 @@ class AutoExpulsion(DNAOneTimeTask, CommissionsTask):
                     self.move_on_begin()
                     _start_time = time.time()
                 _skill_time = self.use_skill(_skill_time)
-                if time.time() - _start_time >= self.config.get('任务超时时间', 120):
+                if time.time() - _start_time >= self.config.get("任务超时时间", 120):
                     logger.info("已经超时，重开任务...")
                     self.give_up_mission()
                     self.wait_until(lambda: not self.in_team(), time_out=30)
 
             _status = self.handle_mission_interface()
             if _status == Mission.START:
-                self.log_info('任务完成')
+                self.log_info("任务完成")
                 _count += 1
-                if _count >= self.config.get('刷几次', 999):
+                if _count >= self.config.get("刷几次", 999):
                     return
                 self.wait_until(self.in_team, time_out=30)
+                self.sleep(2.5)
                 _start_time = time.time()
                 self.move_on_begin()
             self.sleep(0.2)
 
     def move_on_begin(self):
-        if (walk_sec:=self.config.get('开局向前走', 0)) > 0:
-            self.send_key('w', down_time=walk_sec)
+        if (walk_sec := self.config.get("开局向前走", 0)) > 0:
+            self.send_key("w", down_time=walk_sec)

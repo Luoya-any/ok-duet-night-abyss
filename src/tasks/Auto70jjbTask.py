@@ -29,12 +29,15 @@ class Auto70jjbTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
             '波次超时时间': '超时后将重启',
         }
         self.setup_commission_config()
+        self.default_config.pop("启用自动穿引共鸣", None)
+        self.default_config.pop("自动选择首个密函和密函奖励", None)
         self.name = "自动70级皎皎币本"
         self.action_timeout = 10
         self.quick_move_task = QuickMoveTask(self)
         
     def run(self):
         DNAOneTimeTask.run(self)
+        self.move_mouse_to_safe_position()
         try:
             return self.do_run()
         except TaskDisabledException as e:
@@ -42,7 +45,6 @@ class Auto70jjbTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         except Exception as e:
             logger.error('AutoDefence error', e)
             raise
-        self.quick_move_task.stop()
 
     def do_run(self):
         self.init_param()
@@ -51,7 +53,6 @@ class Auto70jjbTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         _wait_next_wave = False
         _skill_time = 0
         _wave_start = 0
-        self.quick_move_task.stop()
         if self.in_team():
             self.open_in_mission_menu()
             self.sleep(0.5)
@@ -76,9 +77,10 @@ class Auto70jjbTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
             _status = self.handle_mission_interface(stop_func=self.stop_func)
             if _status == Mission.START or _status == Mission.STOP:
                 if _status == Mission.STOP:
-                    self.restart_mission()
-                    self.log_info('任务中止，已重启')
+                    self.quit_mission()
+                    self.log_info('任务中止')
                     self.init_param()
+                    continue
                 else:
                     self.log_info('任务完成')
                 self.wait_until(self.in_team, time_out=30)                
@@ -97,7 +99,6 @@ class Auto70jjbTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         self.stop_mission = False
         self.current_round = -1
         self.current_wave = -1
-        self.quick_move_task.stop()
 
     def stop_func(self):
         self.get_round_info()

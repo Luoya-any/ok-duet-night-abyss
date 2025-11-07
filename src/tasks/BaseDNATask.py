@@ -2,6 +2,7 @@ import time
 import numpy as np
 import cv2
 import winsound
+import win32api
 
 from ok import BaseTask, Box
 
@@ -17,29 +18,30 @@ class BaseDNATask(BaseTask):
             return True
         return False
     
-    def find_start_btn(self, threshold: float = 0, box: Box | None = None) -> Box | None:
-        return self.find_one('start_icon', threshold=threshold, box=box)
+    def find_start_btn(self, threshold: float = 0, box: Box | None = None, template = None) -> Box | None:
+        if isinstance(box, Box):
+            self.draw_boxes(box.name, box, "blue")
+        return self.find_one('start_icon', threshold=threshold, box=box, template=template)
     
-    def find_cancel_btn(self, threshold: float = 0, box: Box | None = None) -> Box | None:
-        return self.find_one('cancel_icon', threshold=threshold, box=box)
+    def find_cancel_btn(self, threshold: float = 0, box: Box | None = None, template = None) -> Box | None:
+        if isinstance(box, Box):
+            self.draw_boxes(box.name, box, "blue")
+        return self.find_one('cancel_icon', threshold=threshold, box=box, template=template)
     
-    def find_retry_btn(self, threshold: float = 0, box: Box | None = None) -> Box | None:
-        return self.find_one('retry_icon', threshold=threshold, box=box)
+    def find_retry_btn(self, threshold: float = 0, box: Box | None = None, template = None) -> Box | None:
+        if isinstance(box, Box):
+            self.draw_boxes(box.name, box, "blue")
+        return self.find_one('retry_icon', threshold=threshold, box=box, template=template)
     
-    def find_quit_btn(self, threshold: float = 0, box: Box | None = None) -> Box | None:
-        return self.find_one('quit_icon', threshold=threshold, box=box)
+    def find_quit_btn(self, threshold: float = 0, box: Box | None = None, template=None) -> Box | None:
+        if isinstance(box, Box):
+            self.draw_boxes(box.name, box, "blue")
+        return self.find_one('quit_icon', threshold=threshold, box=box, template=template)
     
-    def wait_click_start_btn(self, threshold: float = 0, time_out: float = 0, box: Box | None = None, raise_if_not_found: bool = True) -> bool:
-        return self.wait_click_feature('start_icon', threshold=threshold, time_out=time_out, box=box, raise_if_not_found=raise_if_not_found)
-    
-    def wait_click_cancel_btn(self, threshold: float = 0, time_out: float = 0, box: Box | None = None, raise_if_not_found: bool = True) -> bool:
-        return self.wait_click_feature('cancel_icon', threshold=threshold, time_out=time_out, box=box, raise_if_not_found=raise_if_not_found)
-    
-    def wait_click_retry_btn(self, threshold: float = 0, time_out: float = 0, box: Box | None = None, raise_if_not_found: bool = True) -> bool:
-        return self.wait_click_feature('retry_icon', threshold=threshold, time_out=time_out, box=box, raise_if_not_found=raise_if_not_found)
-
-    def wait_click_quit_btn(self, threshold: float = 0, time_out: float = 0, box: Box | None = None, raise_if_not_found: bool = True) -> bool:
-        return self.wait_click_feature('quit_icon', threshold=threshold, time_out=time_out, box=box, raise_if_not_found=raise_if_not_found)
+    def find_drop_item(self, rates = 2000, threshold: float = 0, box: Box | None = None, template = None) -> Box | None:
+        if isinstance(box, Box):
+            self.draw_boxes(box.name, box, "blue")
+        return self.find_one(f'drop_item_{str(rates)}', threshold=threshold, box=box, template=template)
     
     def click_until(self, click_func: callable, check_func: callable, check_interval: float = 2, time_out: float = 10):
         start = time.time()
@@ -55,13 +57,24 @@ class BaseDNATask(BaseTask):
             return getattr(self, key)
         return default
 
-    def soundBeep(self):
+    def soundBeep(self, _n=None):
         if hasattr(self, "config") and not self.config.get('发出声音提醒', True):
             return
-        n = self.afk_config['提示音'] if self.afk_config['提示音'] > 0 else 1
+        if _n is None:
+            n = self.afk_config['提示音'] if self.afk_config['提示音'] > 0 else 1
+        else:
+            n = _n
         for _ in range(n):
             winsound.Beep(523, 150)
             self.sleep(0.3)
+
+    def log_info_notify(self, msg):
+        self.log_info(msg, notify=self.afk_config['弹出通知'])
+
+    def move_mouse_to_safe_position(self):
+        if self.afk_config["防止鼠标干扰"]:
+            abs_pos = self.executor.interaction.capture.get_abs_cords(self.width_of_screen(0.85), self.height_of_screen(0.5))
+            win32api.SetCursorPos(abs_pos)
 
 
 lower_white = np.array([244, 244, 244], dtype=np.uint8)

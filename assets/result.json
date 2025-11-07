@@ -50,38 +50,42 @@
         },
         {
             "id": 1,
-            "name": "lv_text"
+            "name": "drop_item_2000"
         },
         {
             "id": 2,
-            "name": "percentage_icon"
+            "name": "lv_text"
         },
         {
             "id": 3,
-            "name": "quit_big_icon"
+            "name": "percentage_icon"
         },
         {
             "id": 4,
-            "name": "quit_icon"
+            "name": "quit_big_icon"
         },
         {
             "id": 5,
-            "name": "retry_icon"
+            "name": "quit_icon"
         },
         {
             "id": 6,
-            "name": "rogue_dialog"
+            "name": "retry_icon"
         },
         {
             "id": 7,
-            "name": "rogue_gift"
+            "name": "rogue_dialog"
         },
         {
             "id": 8,
-            "name": "serum_icon"
+            "name": "rogue_gift"
         },
         {
             "id": 9,
+            "name": "serum_icon"
+        },
+        {
+            "id": 10,
             "name": "start_icon"
         }
     ],
@@ -89,7 +93,7 @@
         {
             "id": 0,
             "image_id": 0,
-            "category_id": 1,
+            "category_id": 2,
             "segmentation": [],
             "bbox": [
                 118.0636168317864,
@@ -119,7 +123,7 @@
         {
             "id": 2,
             "image_id": 1,
-            "category_id": 9,
+            "category_id": 10,
             "segmentation": [],
             "bbox": [
                 1310.1749049429657,
@@ -133,8 +137,23 @@
         },
         {
             "id": 3,
+            "image_id": 1,
+            "category_id": 1,
+            "segmentation": [],
+            "bbox": [
+                1711.8403831039573,
+                623.1010910848565,
+                95.35907513336606,
+                63.57271675557723
+            ],
+            "ignore": 0,
+            "iscrowd": 0,
+            "area": 6062.235473527289
+        },
+        {
+            "id": 4,
             "image_id": 2,
-            "category_id": 5,
+            "category_id": 6,
             "segmentation": [],
             "bbox": [
                 1648.912547528517,
@@ -147,9 +166,9 @@
             "area": 2004.8602119446582
         },
         {
-            "id": 4,
+            "id": 5,
             "image_id": 2,
-            "category_id": 4,
+            "category_id": 5,
             "segmentation": [],
             "bbox": [
                 2084.988593155894,
@@ -162,9 +181,9 @@
             "area": 1591.7604707311048
         },
         {
-            "id": 5,
+            "id": 6,
             "image_id": 3,
-            "category_id": 3,
+            "category_id": 4,
             "segmentation": [],
             "bbox": [
                 2322.494296577947,
@@ -177,9 +196,9 @@
             "area": 6503.478494701384
         },
         {
-            "id": 6,
+            "id": 7,
             "image_id": 4,
-            "category_id": 2,
+            "category_id": 3,
             "segmentation": [],
             "bbox": [
                 451.6147162797465,
@@ -192,9 +211,9 @@
             "area": 1006.7143877706319
         },
         {
-            "id": 7,
+            "id": 8,
             "image_id": 5,
-            "category_id": 6,
+            "category_id": 7,
             "segmentation": [],
             "bbox": [
                 1504.8517110266162,
@@ -207,9 +226,9 @@
             "area": 1288.5680001156572
         },
         {
-            "id": 8,
+            "id": 9,
             "image_id": 5,
-            "category_id": 7,
+            "category_id": 8,
             "segmentation": [],
             "bbox": [
                 1504.8517110266162,
@@ -222,9 +241,9 @@
             "area": 1515.962353077242
         },
         {
-            "id": 9,
+            "id": 10,
             "image_id": 6,
-            "category_id": 8,
+            "category_id": 9,
             "segmentation": [],
             "bbox": [
                 56.108457166215146,
@@ -243,6 +262,6 @@
         "description": "",
         "contributor": "Label Studio",
         "url": "",
-        "date_created": "2025-11-06 05:31:40.249476"
+        "date_created": "2025-11-08 02:02:35.391865"
     }
 }

@@ -53,11 +53,11 @@ class AutoSkill(DNAOneTimeTask, CommissionsTask):
                 _skill_time = self.use_skill(_skill_time)
             else:
                 if self.config.get('主画面侦测', False):
-                    self.log_info('任务完成', notify=True)
+                    self.log_info_notify('任务完成')
                     self.soundBeep()
                     return
             if time.time() - self.start_time >= self.config.get('任务超时时间', 120):
-                self.log_info('任务超时', notify=True)
+                self.log_info_notify('任务超时')
                 self.soundBeep()
                 return
             self.sleep(0.2)

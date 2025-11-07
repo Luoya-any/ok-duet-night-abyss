@@ -30,6 +30,11 @@ class AutoMoveTask(BaseCombatTask, TriggerTask):
         self.signal_left = False
         self.is_down = False
         self.connected = False
+
+    def reset(self):
+        self.manual_activate = False
+        self.signal = False
+        self.signal_left = False
     
     def run(self):
         if not self.connected:

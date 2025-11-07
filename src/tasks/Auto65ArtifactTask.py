@@ -25,12 +25,14 @@ class Auto65ArtifactTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
             '任务超时时间': '放弃任务前等待的秒数',
         })
         self.setup_commission_config()
-        self.default_config.pop('启用自动穿引共鸣', None)
+        self.default_config.pop("启用自动穿引共鸣", None)
+        self.default_config.pop("自动选择首个密函和密函奖励", None)
         self.name = "自动65级魔之楔本"
         self.action_timeout = 10
         
     def run(self):
         DNAOneTimeTask.run(self)
+        self.move_mouse_to_safe_position()
         try:
             return self.do_run()
         except TaskDisabledException as e:

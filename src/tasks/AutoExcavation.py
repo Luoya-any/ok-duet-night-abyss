@@ -20,24 +20,24 @@ class AutoExcavation(DNAOneTimeTask, CommissionsTask):
             '轮次': 3,
         })
         self.config_description = {
-            '轮次': '打几个轮次',
+            "轮次": "打几个轮次",
         }
         self.setup_commission_config()
         self.name = "自动勘察"
         self.action_timeout = 10
         self.progressing = False
         self.quick_move_task = QuickMoveTask(self)
-        
+
     def run(self):
         DNAOneTimeTask.run(self)
+        self.move_mouse_to_safe_position()
         try:
             return self.do_run()
         except TaskDisabledException as e:
             pass
         except Exception as e:
-            logger.error('AutoExcavation error', e)
+            logger.error("AutoExcavation error", e)
             raise
-        self.quick_move_task.stop()
 
     def do_run(self):
         self.init_param()
@@ -47,26 +47,26 @@ class AutoExcavation(DNAOneTimeTask, CommissionsTask):
             if self.in_team():
                 self.progressing = self.find_target_health_bar()
                 if self.progressing:
-                    self.quick_move_task.stop()
+                    self.quick_move_task.reset()
                     _skill_time = self.use_skill(_skill_time)
                 else:
                     if _skill_time > 0:
                         self.soundBeep(1)
                         _skill_time = 0
+                        self.sleep(1)
                     self.quick_move_task.run()
 
             _status = self.handle_mission_interface(stop_func=self.stop_func)
             if _status == Mission.START:
-                self.log_info('任务完成', notify=True)
+                self.log_info_notify("任务完成")
                 self.soundBeep()
                 self.init_param()
             elif _status == Mission.STOP:
-                self.restart_mission()
-                self.log_info('任务中止，已重启', notify=True)
-                self.soundBeep()
+                self.quit_mission()
                 self.init_param()
+                self.log_info("任务中止")
             elif _status == Mission.CONTINUE:
-                self.log_info('任务继续')
+                self.log_info("任务继续")
                 self.soundBeep()
                 self.wait_until(self.in_team, time_out=30)
 
@@ -75,11 +75,10 @@ class AutoExcavation(DNAOneTimeTask, CommissionsTask):
     def init_param(self):
         self.current_round = -1
         self.progressing = False
-        self.quick_move_task.stop()
 
     def stop_func(self):
         self.get_round_info()
-        if self.current_round >= self.config.get('轮次', 3):
+        if self.current_round >= self.config.get("轮次", 3):
             return True
 
     def find_target_health_bar(self, threshold: float = 0.5):
@@ -93,7 +92,7 @@ class AutoExcavation(DNAOneTimeTask, CommissionsTask):
 
 
 green_health_bar_color = {
-    'r': (140, 145),  # Red range
-    'g': (205, 210),  # Green range
-    'b': (155, 160)  # Blue range
+    "r": (135, 150),  # Red range
+    "g": (200, 215),  # Green range
+    "b": (150, 165),  # Blue range
 }
