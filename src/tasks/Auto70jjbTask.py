@@ -141,11 +141,14 @@ class Auto70jjbTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         self.wait_until(lambda: self.find_next_hint(0.06, 0.29, 0.12, 0.33, r'重置位置'),
                         post_action=self.click(0.35, 0.03, after_sleep=0.5),
                         time_out=2)
-        self.move_mouse_to_safe_position()
         self.wait_until(lambda: self.find_next_hint(0.57, 0.54, 0.62, 0.58, r'确定'),
-                        post_action=self.click(0.60, 0.32, after_sleep=0.5),
-                        time_out=2)
-        self.move_back_from_safe_position()
+                        post_action=lambda: (
+                            self.move_mouse_to_safe_position(),
+                            self.click(0.60, 0.32),
+                            self.move_back_from_safe_position(),
+                            self.sleep(1)
+                        ),
+                        time_out=4)
         self.wait_until(self.in_team,
                         post_action=self.click(0.59, 0.56, after_sleep=0.5),
                         time_out=2)
