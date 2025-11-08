@@ -8,7 +8,7 @@
   <img alt="GitHub Release" src="https://img.shields.io/github/v/release/BnanZ0/ok-duet-night-abyss">
 </div>
 
-### 一个基于图像识别的二重螺旋自动化程序，支持后台运行。
+### 一个基于图像识别的二重螺旋自动化程序，支持后台运行，基于 [ok-script](https://github.com/ok-oldking/ok-script)开发。
 
 ## 免责声明
 
@@ -35,6 +35,10 @@ This software is open source, free of charge and for learning and exchange purpo
 * 支持全 16:9 分辨率
 * 简体中文
 
+### 下载安装包运行
+* 从[https://github.com/BnanZ0/ok-duet-night-abyss/releases](https://github.com/BnanZ0/ok-duet-night-abyss/releases) 下载 ok-dna-win32-China-setup.exe
+* 可自动更新
+
 ### Python 源码运行
 
 仅支持Python 3.12
@@ -45,6 +49,10 @@ pip install -r requirements.txt --upgrade #install python dependencies, 更新�
 python main.py # run the release version 运行发行版
 python main_debug.py # run the debug version 运行调试版
 ```
+
+### QQ群
+* 用户群 1063846003
+* 开发者群 259268560
 
 ### 相关项目
 
