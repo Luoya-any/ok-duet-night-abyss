@@ -129,7 +129,10 @@ class Auto70jjbTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         self.sleep(0.8)
         self.click(0.73, 0.92, after_sleep=0.8)
         self.click(0.35, 0.03, after_sleep=0.8)
-        self.click(0.60, 0.32, after_sleep=0.8)
+        self.move_mouse_to_safe_position()
+        self.click(0.60, 0.32)
+        self.move_back_from_safe_position()
+        self.sleep(0.8)
         self.click(0.59, 0.56, after_sleep=1)
         
     def walk_to_aim(self):   

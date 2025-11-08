@@ -67,6 +67,7 @@ class AutoExploration(DNAOneTimeTask, CommissionsTask):
 
             _status = self.handle_mission_interface(stop_func=self.stop_func)
             if _status == Mission.START:
+                self.wait_until(self.in_team, time_out=30)
                 self.log_info_notify("任务开始")
                 self.soundBeep()
                 _start_time = 0
@@ -74,8 +75,8 @@ class AutoExploration(DNAOneTimeTask, CommissionsTask):
                 self.quit_mission()
                 self.log_info("任务中止")
             elif _status == Mission.CONTINUE:
-                self.log_info("任务继续")
                 self.wait_until(self.in_team, time_out=30)
+                self.log_info("任务继续")
                 _start_time = 0
 
             self.sleep(0.2)

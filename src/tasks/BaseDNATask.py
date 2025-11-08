@@ -12,6 +12,7 @@ class BaseDNATask(BaseTask):
         super().__init__(*args, **kwargs)
         self.key_config = self.get_global_config('Game Hotkey Config')  # 游戏热键配置
         self.afk_config = self.get_global_config('挂机设置')
+        self.old_mouse_pos = None
 
     def in_team(self) -> bool:
         if self.find_one('lv_text', threshold=0.8):
@@ -73,8 +74,16 @@ class BaseDNATask(BaseTask):
 
     def move_mouse_to_safe_position(self):
         if self.afk_config["防止鼠标干扰"]:
+            self.old_mouse_pos = win32api.GetCursorPos()
             abs_pos = self.executor.interaction.capture.get_abs_cords(self.width_of_screen(0.85), self.height_of_screen(0.5))
             win32api.SetCursorPos(abs_pos)
+            self.sleep(0.02)
+
+    def move_back_from_safe_position(self):
+        if self.afk_config["防止鼠标干扰"] and self.old_mouse_pos is not None:
+            self.sleep(0.02)
+            win32api.SetCursorPos(self.old_mouse_pos)
+            self.old_mouse_pos = None
 
 
 lower_white = np.array([244, 244, 244], dtype=np.uint8)

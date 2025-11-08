@@ -58,6 +58,7 @@ class AutoExcavation(DNAOneTimeTask, CommissionsTask):
 
             _status = self.handle_mission_interface(stop_func=self.stop_func)
             if _status == Mission.START:
+                self.wait_until(self.in_team, time_out=30)
                 self.log_info_notify("任务完成")
                 self.soundBeep()
                 self.init_param()
@@ -66,9 +67,9 @@ class AutoExcavation(DNAOneTimeTask, CommissionsTask):
                 self.init_param()
                 self.log_info("任务中止")
             elif _status == Mission.CONTINUE:
+                self.wait_until(self.in_team, time_out=30)
                 self.log_info("任务继续")
                 self.soundBeep()
-                self.wait_until(self.in_team, time_out=30)
 
             self.sleep(0.2)
 

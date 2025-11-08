@@ -98,7 +98,9 @@ class CommissionsTask(BaseCombatTask):
         start_time = time.time()
         while time.time() - start_time < action_timeout:
             if btn := self.find_start_btn(box=box) or self.find_retry_btn():
-                self.click_box(btn)
+                self.move_mouse_to_safe_position()
+                self.click_box(btn, after_sleep=0)
+                self.move_back_from_safe_position()
             self.sleep(0.2)
             if self.find_start_btn() or self.find_letter_btn():
                 break
@@ -190,6 +192,10 @@ class CommissionsTask(BaseCombatTask):
         action_timeout = self.safe_get("action_timeout", timeout)
         if self.config.get("自动选择首个密函和密函奖励", False):
             if self.find_letter_btn():
+                self.move_mouse_to_safe_position()
+                self.click(0.56, 0.5)
+                self.move_back_from_safe_position()
+                self.sleep(0.5)
                 self.click(0.56, 0.5, after_sleep=0.5)
                 self.click_until(
                     click_func=lambda: self.click(0.79, 0.61),

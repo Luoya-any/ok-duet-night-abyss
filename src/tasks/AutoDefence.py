@@ -69,16 +69,17 @@ class AutoDefence(DNAOneTimeTask, CommissionsTask):
 
             _status = self.handle_mission_interface(stop_func=self.stop_func)
             if _status == Mission.START:
-                self.init_param()
+                self.wait_until(self.in_team, time_out=30)
                 self.log_info_notify("任务完成")
                 self.soundBeep()
+                self.init_param()
             elif _status == Mission.STOP:
                 self.quit_mission()
                 self.init_param()
                 self.log_info("任务中止")
             elif _status == Mission.CONTINUE:
-                self.log_info("任务继续")
                 self.wait_until(self.in_team, time_out=30)
+                self.log_info("任务继续")
                 self.current_wave = -1
 
             self.sleep(0.2)
