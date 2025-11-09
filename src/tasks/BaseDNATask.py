@@ -78,29 +78,6 @@ class BaseDNATask(BaseTask):
             win32api.SetCursorPos(self.old_mouse_pos)
             self.old_mouse_pos = None
 
-    def send_vk(self, vk_code, down_time=0.01):
-        if not self.is_post_interaction(): return
-        logger.debug(f'Sending vk {vk_code}')
-        self.send_vk_down(vk_code)
-        self.sleep(down_time)
-        self.send_vk_up(vk_code)
-
-    def send_vk_down(self, vk_code, activate=True):
-        if not self.is_post_interaction(): return
-        if activate:
-            self._executor.interaction.try_activate()
-        self._executor.interaction.post(win32con.WM_KEYDOWN, vk_code, self._executor.interaction.lparam)
-
-    def send_vk_up(self, vk_code):
-        if not self.is_post_interaction(): return
-        self._executor.interaction.post(win32con.WM_KEYUP, vk_code, self._executor.interaction.lparam)
-
-    def is_post_interaction(self):
-        if isinstance(self._executor.interaction, PostMessageInteraction):
-            return True
-        logger.debug(f'is not post interaction')
-        return False
-
 
 lower_white = np.array([244, 244, 244], dtype=np.uint8)
 lower_white_none_inclusive = np.array([243, 243, 243], dtype=np.uint8)

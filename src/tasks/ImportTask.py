@@ -228,20 +228,28 @@ class ImportTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         self.sleep(2)
                 
     def execute_key_action(self, action):
-        if action['type'] == "mouse_down":   
-            self.mouse_down(key=action['button'])
-        elif action['type'] == "mouse_up": 
-            self.mouse_up(key=action['button'])
-        elif action['type'] == "key_down":
-            if action['key'] == "SHIFT" or action['key'] == "shift":
-                win32gui.SendMessage(self.hwnd.hwnd, win32con.WM_KEYDOWN, 0xA0, 0)
-            else:
+        try:
+            if action['type'] == "mouse_down":   
+                self.mouse_down(key=action['button'])
+            elif action['type'] == "mouse_up": 
+                self.mouse_up(key=action['button'])
+            elif action['type'] == "key_down":
+                action['key'] = normalize_key(action['key'])
                 self.send_key_down(action['key'])
-        elif action['type'] == "key_up":
-            if action['key'] == "SHIFT" or action['key'] == "shift":
-                win32gui.SendMessage(self.hwnd.hwnd, win32con.WM_KEYUP, 0xA0, 0)
-            else:
+            elif action['type'] == "key_up":
+                action['key'] = normalize_key(action['key'])
                 self.send_key_up(action['key'])
-        else:
-            self.log_info(f"不支持的按键：{action['type']}")
+            else:
+                raise
+        except:
+            self.log_info(f"不支持的按键-> type: {action['type']} key: {action['key']}")
             raise
+
+
+def normalize_key(key: str) -> str:
+    """
+    将 'shift' (不区分大小写) 标准化为 'lshift'。
+    """
+    if isinstance(key, str) and key.lower() == 'shift':
+        return 'lshift'
+    return key

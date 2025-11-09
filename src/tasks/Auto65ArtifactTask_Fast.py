@@ -44,7 +44,7 @@ class Auto65ArtifactTask_Fast(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         self.default_config.pop("自动选择首个密函和密函奖励", None)
 
         # 任务名称（在UI中显示）
-        self.name = "自动30/65级魔之楔本-移动更快"  # 修改为你的副本名称
+        self.name = "自动30/65级魔之楔本"  # 修改为你的副本名称
         self.action_timeout = 10
 
     def run(self):
@@ -54,7 +54,7 @@ class Auto65ArtifactTask_Fast(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         try:
             return self.do_run()
         except TaskDisabledException:
-            logger.info("任务被禁用")
+            pass
         except Exception as e:
             logger.error("AutoMyDungeonTask error", e)
             raise
@@ -121,6 +121,8 @@ class Auto65ArtifactTask_Fast(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
                 # 走到目标位置
                 try:
                     self.walk_to_aim()
+                except TaskDisabledException:
+                    raise TaskDisabledException
                 except Exception as e:
                     logger.error(f"移动到目标位置失败: {e}")
                     self.give_up_mission()
@@ -147,7 +149,7 @@ class Auto65ArtifactTask_Fast(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
 
             # 1.11s: 开始冲刺 (0.59s后)
             self.sleep(0.59)
-            self.send_vk_down(win32con.VK_LSHIFT)
+            self.send_key_down("lshift")
 
             # 1.33s: 向左移动 (0.22s后)
             self.sleep(0.22)
@@ -171,13 +173,13 @@ class Auto65ArtifactTask_Fast(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
 
             # 5.22s-7.82s: Shift连续切换 (可能在调整位置)
             self.sleep(0.38)
-            self.send_vk_up(win32con.VK_LSHIFT)
+            self.send_key_up("lshift")
             self.sleep(0.24)
-            self.send_vk(win32con.VK_LSHIFT, 0.35)
+            self.send_key("lshift", down_time=0.35)
             self.sleep(0.79)
-            self.send_vk(win32con.VK_LSHIFT, 0.41)
+            self.send_key("lshift", down_time=0.41)
             self.sleep(0.80)
-            self.send_vk_down(win32con.VK_LSHIFT)
+            self.send_key_down("lshift")
 
             # 9.09s: 停止前进 (1.27s后)
             self.sleep(1.27)
@@ -209,7 +211,7 @@ class Auto65ArtifactTask_Fast(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
 
             # 18.89s-18.99s: 释放所有移动键 (4.93s后)
             self.sleep(4.93)
-            self.send_vk_up(win32con.VK_LSHIFT)
+            self.send_key_up("lshift")
             self.sleep(0.10)
             self.send_key_up("a")
 
@@ -220,7 +222,9 @@ class Auto65ArtifactTask_Fast(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
 
             elapsed = time.time() - move_start
             logger.info(f"移动完成，用时 {elapsed:.1f}秒")
-
+        
+        except TaskDisabledException:
+            raise TaskDisabledException
         except Exception as e:
             logger.error(f"移动过程出错: {e}")
             raise
@@ -230,4 +234,4 @@ class Auto65ArtifactTask_Fast(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
             self.send_key_up("a")
             self.send_key_up("s")
             self.send_key_up("d")
-            self.send_vk_up(win32con.VK_LSHIFT)
+            self.send_key_up("lshift")
