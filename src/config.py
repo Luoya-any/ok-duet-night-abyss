@@ -137,6 +137,6 @@ config = {
         ["src.tasks.AutoCombatTask", "AutoCombatTask"],
         ["src.tasks.AutoMoveTask", "AutoMoveTask"],
         ["src.tasks.AutoAimTask", "AutoAimTask"],
-        ["src.tasks.ClickDialogTask", "ClickDialogTask"],
+        ["src.tasks.AutoRogueDialogTask", "AutoRogueDialogTask"],
     ]
 }
