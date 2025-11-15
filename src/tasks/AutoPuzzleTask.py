@@ -73,7 +73,7 @@ class AutoPuzzleTask(BaseDNATask, TriggerTask):
 
         # 所有 puzzle 使用相同的检测区域
         for i in range(1, 9):
-            self.puzzle_boxes[f"puzzle_{i}"] = puzzle_box
+            self.puzzle_boxes[f"mech_maze_{i}"] = puzzle_box
 
         self.template_shape = self.frame.shape[:2]
         height, width = self.frame.shape[:2]
@@ -90,7 +90,7 @@ class AutoPuzzleTask(BaseDNATask, TriggerTask):
             self._debug_logged = True
 
         for i in range(1, 9):
-            puzzle_name = f"puzzle_{i}"
+            puzzle_name = f"mech_maze_{i}"
 
             # 使用 find_one 查找拼图
             try:

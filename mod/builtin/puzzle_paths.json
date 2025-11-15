@@ -4,7 +4,7 @@
   "resolution": "1920x1080",
   "format": "坐标序列 [(x1, y1), (x2, y2), ...]，执行时自动处理：第一个点按下 → 中间点移动 → 最后一个点松开",
   "paths": {
-    "puzzle_1": {
+    "mech_maze_1": {
       "coordinates": [
         [
           1219,
@@ -53,7 +53,7 @@
       ],
       "point_count": 11
     },
-    "puzzle_2": {
+    "mech_maze_2": {
       "coordinates": [
         [
           1190,
@@ -82,7 +82,7 @@
       ],
       "point_count": 6
     },
-    "puzzle_3": {
+    "mech_maze_3": {
       "coordinates": [
         [
           1195,
@@ -103,7 +103,7 @@
       ],
       "point_count": 4
     },
-    "puzzle_4": {
+    "mech_maze_4": {
       "coordinates": [
         [
           1185,
@@ -124,7 +124,7 @@
       ],
       "point_count": 4
     },
-    "puzzle_5": {
+    "mech_maze_5": {
       "coordinates": [
         [
           1200,
@@ -157,7 +157,7 @@
       ],
       "point_count": 7
     },
-    "puzzle_6": {
+    "mech_maze_6": {
       "coordinates": [
         [
           1200,
@@ -194,7 +194,7 @@
       ],
       "point_count": 8
     },
-    "puzzle_7": {
+    "mech_maze_7": {
       "coordinates": [
         [
           1185,
@@ -223,7 +223,7 @@
       ],
       "point_count": 6
     },
-    "puzzle_8": {
+    "mech_maze_8": {
       "coordinates": [
         [
           1480,

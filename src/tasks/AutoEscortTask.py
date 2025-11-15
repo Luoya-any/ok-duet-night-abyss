@@ -532,7 +532,7 @@ class AutoEscortTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
             has_puzzle = False
 
             for i in range(1, 9):
-                puzzle_name = f"puzzle_{i}"
+                puzzle_name = f"mech_maze_{i}"
                 if puzzle_name not in puzzle_task.puzzle_boxes:
                     continue
 
