@@ -154,7 +154,10 @@ class CommissionsTask(BaseDNATask):
             time_out=action_timeout,
             raise_if_not_found=True,
         )
-        self.sleep(2)
+        self.wait_until(
+            condition=lambda: self.find_retry_btn() or self.find_bottom_start_btn() or self.find_big_bottom_start_btn(),
+            time_out=action_timeout,
+        )
 
     def continue_mission(self, timeout=0):
         if self.in_team():
