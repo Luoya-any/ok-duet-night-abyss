@@ -53,8 +53,10 @@ class CommissionsTask(BaseDNATask):
     def find_quit_btn(self, threshold=0):
         return self.find_one("ingame_quit_icon", threshold=threshold)
 
-    def find_continue_btn(self, threshold=0):
-        return self.find_one("ingame_continue_icon", threshold=threshold)
+    def find_continue_btn(self, threshold=0, box=None):
+        if box is None:
+            box = self.box_of_screen(0.610, 0.671, 0.647, 0.714, name="continue_mission", hcenter=True)
+        return self.find_one("ingame_continue_icon", threshold=threshold, box=box)
 
     def find_bottom_start_btn(self, threshold=0):
         return self.find_start_btn(threshold=threshold,
