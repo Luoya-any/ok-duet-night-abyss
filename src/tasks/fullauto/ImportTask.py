@@ -111,7 +111,7 @@ class ImportTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         while True:
             if self.in_team():
                 self.get_wave_info()
-                if self.current_wave != -1:
+                if self.current_wave != 0:
                     if self.current_wave != _wave:
                         _wave = self.current_wave
                         _wait_next_wave = False
@@ -151,14 +151,14 @@ class ImportTask(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
     def init_param(self):
         self.delay_index = None
         self.stop_mission = False
-        self.current_round = -1
+        self.current_round = 0
         self.reset_wave_info()
         self.skill_time = 0
 
     def stop_func(self):
         self.get_round_info()
         n = self.config.get('轮次', 3)
-        if n == 1 or self.current_round >= n:
+        if self.current_round >= n:
             return True
 
     def process_json_files(self, folder_path):

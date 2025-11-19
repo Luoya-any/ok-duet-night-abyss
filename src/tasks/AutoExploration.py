@@ -99,7 +99,7 @@ class AutoExploration(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
 
     def init_all(self):
         self.init_for_next_round()
-        self.current_round = -1
+        self.current_round = 0
 
     def init_for_next_round(self):
         self.init_runtime_state()

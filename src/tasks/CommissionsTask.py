@@ -17,8 +17,8 @@ class CommissionsTask(BaseDNATask):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.current_round = -1
-        self.current_wave = -1
+        self.current_round = 0
+        self.current_wave = 0
         self.mission_status = None
         self.action_timeout = 10
         self.wave_future = None
@@ -319,7 +319,7 @@ class CommissionsTask(BaseDNATask):
 
         if new_round_from_ocr is not None:
             self.current_round = new_round_from_ocr
-        elif self.current_round != -1:  # OCR失败，但之前已有轮次记录，则递增
+        elif self.current_round != 0:  # OCR失败，但之前已有轮次记录，则递增
             self.current_round += 1
 
         if prev_round != self.current_round:
@@ -350,12 +350,12 @@ class CommissionsTask(BaseDNATask):
         if self.wave_future is not None:
             self.wave_future.cancel()
             self.wave_future = None
-        self.current_wave = -1
+        self.current_wave = 0
         self.info_set("当前波次", self.current_wave)
 
     def wait_until_get_wave_info(self):
         self.log_info("等待波次信息...")
-        while self.current_wave == -1:
+        while self.current_wave == 0:
             self.get_wave_info()
             self.sleep(0.2)
 

@@ -108,7 +108,7 @@ class AutoHedge(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
 
     def init_all(self):
         self.init_for_next_round()
-        self.current_round = -1
+        self.current_round = 0
         self.track_point_pos = 0
         self.mission_complete = False
         self.ocr_future = None
