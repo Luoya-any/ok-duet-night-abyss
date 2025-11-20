@@ -84,6 +84,7 @@ class AutoPuzzleTask(BaseDNATask, TriggerTask):
             win32api.keybd_event(win32con.VK_MENU, 0, 0, 0)
             win32api.keybd_event(win32con.VK_MENU, 0, win32con.KEYEVENTF_KEYUP, 0)
             hwnd_window.bring_to_front()
+            self.sleep(0.5)
 
         puzzle_data = self.puzzle_paths[puzzle_name]
         # 提取 coordinates 字段（如果是新格式），否则使用原数据（兼容旧格式）
