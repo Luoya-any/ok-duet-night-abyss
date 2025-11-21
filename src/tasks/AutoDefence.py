@@ -145,9 +145,9 @@ class AutoDefence(DNAOneTimeTask, CommissionsTask, BaseCombatTask):
         if self.external_movement is not _default_movement:
             self.log_info("任务开始，执行外部移动逻辑")
             self.external_movement()
-            self.log_info(f"外部移动执行完毕，等待战斗开始，{DEFAULT_ACTION_TIMEOUT}秒后超时")
+            self.log_info(f"外部移动执行完毕，等待战斗开始，{DEFAULT_ACTION_TIMEOUT+10}秒后超时")
             if not self.wait_until(lambda: self.current_wave != -1, post_action=self.get_wave_info,
-                                   time_out=DEFAULT_ACTION_TIMEOUT):
+                                   time_out=DEFAULT_ACTION_TIMEOUT+10):
                 self.log_info("等待战斗开始超时，重开任务")
                 self.open_in_mission_menu()
             else:

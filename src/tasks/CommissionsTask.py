@@ -350,7 +350,9 @@ class CommissionsTask(BaseDNATask):
         if self.wave_future is None:
             mission_info_box = self.box_of_screen_scaled(2560, 1440, 275, 372, 445, 470, name="mission_info",
                                                          hcenter=True)
-            self.wave_future = self.thread_pool_executor.submit(self.ocr, box=mission_info_box,
+            frame = self.frame.copy()
+            self.wave_future = self.thread_pool_executor.submit(self.ocr, frame=frame,
+                                                                box=mission_info_box,
                                                                 frame_processor=isolate_white_text_to_black,
                                                                 match=re.compile(r"\d/\d"))
 
